@@ -1,0 +1,26 @@
+input[name="tabs"] + label::before,
+input[name="tabs"] + label::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  right: 50%;
+  height: 2px;
+  background-color: #ffa800;
+  transition: left 0.3s ease, right 0.3s ease;
+  z-index: 2;
+}
+
+input[name="tabs"] + label:hover:before,
+input[name="tabs"]:checked + label:before {
+  left: 0;
+  opacity: 1;
+  visibility: visible;
+}
+
+input[name="tabs"] + label:hover::after,
+input[name="tabs"]:checked + label:after {
+  right: 0;
+  opacity: 1;
+  visibility: visible;
+}

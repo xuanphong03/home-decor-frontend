@@ -1,0 +1,16 @@
+.product-list .prev-btn,
+.product-list .next-btn {
+  opacity: 0;
+  visibility: hidden;
+}
+.product-list:hover .prev-btn,
+.product-list:hover .next-btn {
+  opacity: 1;
+  visibility: visible;
+}
+.product-list:hover .prev-btn {
+  left: 30px;
+}
+.product-list:hover .next-btn {
+  right: 30px;
+}

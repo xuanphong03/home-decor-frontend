@@ -1,0 +1,56 @@
+.tag {
+  position: relative;
+  color: #fff;
+  font-size: 12px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  padding: 2px 4px;
+  font-weight: 500;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0px;
+    transform: translateX(-100%);
+    border-top: 6px solid #000;
+    border-left: 6px solid transparent;
+    border-right: 6px solid #000;
+    border-bottom: 6px solid transparent;
+  }
+
+  &::after {
+    content: "";
+    position: absolute;
+    left: 0px;
+    bottom: 0;
+    transform: translateX(-100%);
+    border-top: 6px solid transparent;
+    border-left: 6px solid transparent;
+    border-right: 6px solid #000;
+    border-bottom: 6px solid #000;
+  }
+  &.tag-hot {
+    background-color: #f4524d;
+  }
+  &.tag-hot::before {
+    border-top: 6px solid #f4524d;
+    border-right: 6px solid #f4524d;
+  }
+  &.tag-hot::after {
+    border-right: 6px solid #f4524d;
+    border-bottom: 6px solid #f4524d;
+  }
+  &.tag-sale {
+    background-color: #323232;
+  }
+  &.tag-sale::before {
+    border-top: 6px solid #323232;
+    border-right: 6px solid #323232;
+  }
+  &.tag-sale::after {
+    border-right: 6px solid #323232;
+    border-bottom: 6px solid #323232;
+  }
+}
