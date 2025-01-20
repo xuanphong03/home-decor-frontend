@@ -17,4 +17,14 @@ export const userService = {
     const url = `/admin/users/${id}`;
     return axiosClient.get(url);
   },
+
+  updatePermissionsOnUser(userId, permissionsOnUser) {
+    const url = `/admin/users/${userId}/permissions`;
+    return axiosClient.put(url, permissionsOnUser);
+  },
+
+  updateRolesOnUser(userId, rolesOnUsr) {
+    const url = `/admin/users/${userId}/roles`;
+    return axiosClient.put(url, rolesOnUsr);
+  },
 };

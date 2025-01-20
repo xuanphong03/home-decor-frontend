@@ -27,6 +27,7 @@ import UserList from "@/pages/Admin/pages/User/UserList";
 import UserDetail from "@/pages/Admin/pages/User/UserDetail";
 import OrderList from "@/pages/Admin/pages/Order/OrderList";
 import OrderDetail from "@/pages/Admin/pages/Order/OrderDetail";
+import SettingPage from "@/pages/Admin/pages/Setting/SettingPage";
 
 export const privateRoutes = (
   <>
@@ -53,6 +54,7 @@ export const privateRoutes = (
         <Route path="users/:id" element={<UserDetail />} />
         <Route path="orders" element={<OrderList />} />
         <Route path="orders/:id" element={<OrderDetail />} />
+        <Route path="settings" element={<SettingPage />} />
         <Route path="*" element={<Error />} />
       </Route>
     </Route>

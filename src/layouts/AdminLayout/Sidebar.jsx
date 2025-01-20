@@ -38,7 +38,7 @@ export default function Sidebar() {
               end
             >
               <AiOutlineDashboard className="text-xl" />
-              <span className="text-[15px]">Thống kê - Doanh thu</span>
+              <span className="text-[15px]">Thống kê</span>
             </NavLink>
           </li>
           {permissions?.includes("categories.read") && (
@@ -154,7 +154,7 @@ export default function Sidebar() {
                 end
               >
                 <LuSettings className="text-xl" />{" "}
-                <span className="text-[15px]">Cài đặt</span>
+                <span className="text-[15px]">Thiết lập</span>
               </NavLink>
             </h3>
           </li>

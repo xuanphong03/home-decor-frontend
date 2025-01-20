@@ -3,12 +3,13 @@ import { Alert, Avatar, Breadcrumbs } from "@mui/material";
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import UserSetting from "./UserSetting";
+import { toast } from "react-toastify";
 
 export default function UserDetail() {
   const { id } = useParams();
   const [alert, setAlert] = useState(null);
   const [userDetail, setUserDetail] = useState(null);
-  const [openUserSetting, setOpenUserSetting] = useState(false);
+  const [openUserSetting, setOpenUserSetting] = useState(true);
 
   const getUserDetail = async () => {
     try {
@@ -18,24 +19,53 @@ export default function UserDetail() {
       setAlert({ type: "error", message: error.response.data.message });
     }
   };
+  const handleUpdateUser = async (data) => {
+    try {
+      const rolesOnUser = data.roles;
+      const permissionsOnUser = data.permissions;
+      const updateRolesResponse = await userService.updateRolesOnUser(
+        userDetail.id,
+        rolesOnUser
+      );
+      const updatePermissionsResponse =
+        await userService.updatePermissionsOnUser(
+          userDetail.id,
+          permissionsOnUser
+        );
+      if (updateRolesResponse.success && updatePermissionsResponse.success) {
+        setUserDetail(updatePermissionsResponse.data);
+        return toast.success("Cập nhật quyền và vai trò thành công");
+      }
+    } catch (error) {
+      return toast.error("Cập nhật quyền và vai trò thất bại");
+    } finally {
+      setOpenUserSetting(false);
+    }
+  };
+
   useEffect(() => {
     getUserDetail();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
+
   return (
     <>
       {openUserSetting && (
         <div className="fixed inset-0 z-50 flex items-center justify-center">
           <div className="absolute inset-0 bg-black bg-opacity-30"></div>
           <div className="relative">
-            <UserSetting user={userDetail} />
+            <UserSetting
+              user={userDetail}
+              onClose={() => setOpenUserSetting(false)}
+              onSubmit={handleUpdateUser}
+            />
           </div>
         </div>
       )}
       <div className="h-[45px] px-10 shadow w-full flex items-center">
         <Breadcrumbs aria-label="breadcrumb" sx={{ fontSize: "14px" }}>
           <Link to="/admin" className="hover:underline">
-            Thống kê - Doanh thu
+            Thống kê
           </Link>
           <Link to="/admin/users" className="hover:underline">
             Người dùng
@@ -55,6 +85,12 @@ export default function UserDetail() {
       <div className="px-10 py-5">
         <div className="flex items-center justify-between mb-6">
           <h2 className="text-[28px] font-medium">Thông tin người dùng</h2>
+          <button
+            onClick={() => setOpenUserSetting(true)}
+            className="px-5 py-2 bg-blue-500 text-white rounded text-sm"
+          >
+            Gán quyền và vai trò
+          </button>
         </div>
         <div className="py-2 grid grid-cols-12 gap-10">
           <section className="col-span-4">

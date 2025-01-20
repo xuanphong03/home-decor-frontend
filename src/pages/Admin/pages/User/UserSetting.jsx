@@ -1,121 +1,169 @@
-import { permissionService } from "@/services/permissionService";
+import { PERMISSIONS } from "@/constants/permissions";
 import { roleService } from "@/services/roleService";
 import { useEffect, useState } from "react";
+import { Controller, useForm } from "react-hook-form";
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
+import LoadingModal from "@/components/Loading/LoadingModal";
 
-export default function UserSetting({ user }) {
+export default function UserSetting({ user, onSubmit, onClose }) {
+  const schema = yup.object().shape({
+    roles: yup.array().of(yup.number()),
+    permissions: yup.array().of(yup.string()),
+  });
+
+  const {
+    control,
+    handleSubmit,
+    setValue,
+    formState: { isSubmitting },
+  } = useForm({
+    defaultValues: {
+      roles: [],
+      permissions: [],
+    },
+    resolver: yupResolver(schema),
+  });
   const [roleList, setRoleList] = useState([]);
-  const [permissionList, setPermissionList] = useState([]);
 
   const getRoles = async () => {
     try {
-      const roles = await roleService.getAll();
-      setRoleList(roles);
+      const response = await roleService.getAll();
+      setRoleList(response.data);
     } catch (error) {
       throw new Error("Get roles to failed");
     }
   };
-  const getPermissions = async () => {
-    try {
-      const response = await permissionService.getAll();
-      const permissions = Object.values(
-        response.reduce((result, permission) => {
-          const item = { value: permission };
-          if (permission.endsWith("read")) {
-            item.name = "Xem";
-          } else if (permission.endsWith("create")) {
-            item.name = "Thêm";
-          } else if (permission.endsWith("update")) {
-            item.name = "Sửa";
-          } else if (permission.endsWith("delete")) {
-            item.name = "Xóa";
-          } else if (permission.endsWith("asign")) {
-            item.name = "Gán";
-          }
-          let name;
-          if (permission.startsWith("products")) {
-            name = "Sản phẩm";
-          } else if (permission.startsWith("categories")) {
-            name = "Danh mục";
-          } else if (permission.startsWith("orders")) {
-            name = "Đơn hàng";
-          } else if (permission.startsWith("users")) {
-            name = "Người dùng";
-          } else if (permission.startsWith("coupons")) {
-            name = "Mã giảm giá";
-          } else if (permission.startsWith("roles")) {
-            name = "Vai trò";
-          } else if (permission.startsWith("permissions")) {
-            name = "Phân quyền";
-          }
-          if (!result[name]) {
-            result[name] = { name, items: [] };
-          }
-          result[name].items.push(item);
-          return result;
-        }, {})
-      );
 
-      console.log(permissions);
-      setPermissionList(permissions);
-    } catch (error) {
-      throw new Error("Get roles to failed");
+  const handleSubmitForm = async (data) => {
+    if (onSubmit) {
+      await onSubmit(data);
+    }
+  };
+
+  const handleClickCancel = () => {
+    if (onClose) {
+      onClose();
     }
   };
 
   useEffect(() => {
     getRoles();
-    getPermissions();
   }, []);
+
+  useEffect(() => {
+    if (user) {
+      const roleIds = user.roles.map(({ roleId }) => roleId);
+      const permissionsOnUser = user.permissions.map(
+        ({ permission }) => permission.name
+      );
+      setValue("roles", roleIds);
+      setValue("permissions", permissionsOnUser);
+    }
+  }, [user, setValue]);
   return (
-    <div className="p-5 shadow bg-white rounded w-[800px] h-[600px] overflow-y-auto">
-      <h2 className="font-medium text-xl mb-4">Gán quyền cho người dùng</h2>
-      <form>
-        <div className="mb-5">
-          <h3 className="mb-2">Vai trò</h3>
-          <div>
-            {roleList.map(({ id, name }) => (
-              <label key={id} className="flex items-center gap-1 mb-1">
-                <input type="checkbox" name="role" value={name} />
-                {name}
-              </label>
-            ))}
+    <>
+      {isSubmitting && <LoadingModal />}
+      <div className="p-5 shadow bg-white rounded w-[800px] h-[600px] overflow-y-auto">
+        <h2 className="font-medium text-xl mb-4">Gán quyền cho người dùng</h2>
+        <form onSubmit={handleSubmit(handleSubmitForm)}>
+          <div className="mb-5">
+            <h3 className="mb-2">Vai trò</h3>
+            <div>
+              {roleList.map(({ id, name }) => (
+                <label key={id} className="flex items-center gap-1 mr-4">
+                  <Controller
+                    name="roles"
+                    control={control}
+                    render={({ field }) => (
+                      <input
+                        type="checkbox"
+                        value={id}
+                        checked={field.value.includes(id)}
+                        onChange={(e) => {
+                          if (e.target.checked) {
+                            field.onChange([...field.value, id]);
+                          } else {
+                            field.onChange(field.value.filter((p) => p !== id));
+                          }
+                        }}
+                      />
+                    )}
+                  />
+                  {name}
+                </label>
+              ))}
+            </div>
           </div>
-        </div>
-        <div className="mb-5">
-          <h3 className="mb-2">Thêm quyền</h3>
-          <table className="w-full border border-solid border-gray-300">
-            <thead>
-              <tr>
-                <th className="p-2 text-left border border-solid border-gray-300">
-                  Chức năng
-                </th>
-                <th className="p-2 text-left border border-solid border-gray-300">
-                  Quyền
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {permissionList.map(({ name, items }) => (
-                <tr key={name}>
-                  <td className="p-2 border border-solid border-gray-300">
-                    {name}
-                  </td>
-                  <td className="p-2 border border-solid border-gray-300">
-                    <div className="flex flex-wrap items-center gap-5 ">
-                      {items.map(({ name, value }) => (
-                        <label key={value} className="flex items-center gap-1">
-                          <input type="checkbox" value={value} />
+          <div className="mb-5">
+            <h3 className="mb-2">Thêm quyền</h3>
+            <table className="w-full border border-solid border-gray-300">
+              <tbody className="border border-solid border-gray-300">
+                {PERMISSIONS.map(({ name, permissions }) => (
+                  <tr
+                    key={name}
+                    className="border border-solid border-gray-300"
+                  >
+                    <th className="px-4 py-2 text-left border border-solid border-gray-300">
+                      {name}
+                    </th>
+                    <td className="px-4 py-2 text-left border border-solid border-gray-300">
+                      {permissions.map(({ name, permission }) => (
+                        <label
+                          key={permission}
+                          className="flex items-center gap-1 mr-4"
+                        >
+                          <Controller
+                            name="permissions"
+                            control={control}
+                            render={({ field }) => (
+                              <input
+                                type="checkbox"
+                                value={permission}
+                                checked={field.value.includes(permission)}
+                                onChange={(e) => {
+                                  if (e.target.checked) {
+                                    field.onChange([
+                                      ...field.value,
+                                      permission,
+                                    ]);
+                                  } else {
+                                    field.onChange(
+                                      field.value.filter(
+                                        (p) => p !== permission
+                                      )
+                                    );
+                                  }
+                                }}
+                              />
+                            )}
+                          />
                           {name}
                         </label>
                       ))}
-                    </div>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </form>
-    </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <div className="text-right text-sm">
+            <button
+              type="button"
+              onClick={handleClickCancel}
+              className="px-5 py-2 text-white bg-red-500 hover:bg-opacity-80 transition-all rounded"
+            >
+              Hủy bỏ
+            </button>
+            <button
+              type="submit"
+              className="ml-2 px-5 py-2 text-white bg-blue-500 hover:bg-opacity-80 transition-all rounded"
+            >
+              Lưu thông tin
+            </button>
+          </div>
+        </form>
+      </div>
+    </>
   );
 }

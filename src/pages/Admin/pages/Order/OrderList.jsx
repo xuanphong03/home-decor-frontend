@@ -99,7 +99,7 @@ export default function OrderList() {
       <div className="h-[45px] px-10 shadow w-full flex items-center">
         <Breadcrumbs aria-label="breadcrumb" sx={{ fontSize: "14px" }}>
           <Link to="/admin" className="hover:underline">
-            Thống kê - Doanh thu
+            Thống kê
           </Link>
           <Link to="#" className="text-secondary">
             Sản phẩm
