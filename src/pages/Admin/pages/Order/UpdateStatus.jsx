@@ -1,6 +1,8 @@
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { ORDER } from "@/constants/order-status";
+import { useEffect } from "react";
 
 export default function UpdateStatus({
   paymentStatus,
@@ -16,7 +18,7 @@ export default function UpdateStatus({
       .string()
       .required("Vui lòng chọn trạng thái vận chuyển."),
   });
-  const { register, handleSubmit } = useForm({
+  const { register, handleSubmit, setValue } = useForm({
     resolver: yupResolver(schema),
     defaultValues: {
       paymentStatus: paymentStatus,
@@ -31,6 +33,10 @@ export default function UpdateStatus({
     if (!onSubmit) return;
     await onSubmit(data);
   };
+  useEffect(() => {
+    setValue("paymentStatus", paymentStatus);
+    setValue("shippingStatus", shippingStatus);
+  }, [paymentStatus, shippingStatus, setValue]);
   return (
     <div className="p-5 bg-white w-[500px]">
       <h2 className="font-bold mb-4">Cập nhật trạng thái đơn hàng</h2>
@@ -54,9 +60,10 @@ export default function UpdateStatus({
               {...register("shippingStatus")}
               className="border border-solid border-gray-300 px-4 py-1 outline-none w-full"
             >
-              <option value={"PENDING"}>Chờ xác nhận</option>
-              <option value={"SHIPPING"}>Đang vận chuyển</option>
-              <option value={"RECEIVED"}>Đã nhận hàng</option>
+              <option value={ORDER.PENDING}>Chờ xác nhận</option>
+              <option value={ORDER.SHIPPING}>Đang vận chuyển</option>
+              <option value={ORDER.RECEIVED}>Đã nhận hàng</option>
+              <option value={ORDER.CANCELED}>Đã hủy</option>
             </select>
           </div>
         </div>

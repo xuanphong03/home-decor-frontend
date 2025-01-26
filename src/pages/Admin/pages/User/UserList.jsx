@@ -85,7 +85,7 @@ export default function UserList() {
             Thống kê
           </Link>
           <Link to="#" className="text-secondary">
-            Người dùng
+            Danh sách người dùng
           </Link>
         </Breadcrumbs>
       </div>
@@ -96,7 +96,7 @@ export default function UserList() {
         <table className="w-full text-sm bg-white border border-solid border-gray-200 rounded overflow-hidden shadow">
           <thead>
             <tr className="px-4 border-y border-solid border-gray-200">
-              <td colSpan={6} className="py-4 px-2">
+              <td colSpan={7} className="py-4 px-2">
                 <form className="relative" onSubmit={handleSearchUser}>
                   <input
                     id="search-term"
@@ -121,8 +121,8 @@ export default function UserList() {
                 </form>
               </td>
             </tr>
-            <tr className="px-4 border-y border-solid border-gray-200">
-              <th scope="col" className="p-4 text-left">
+            <tr className="px-4 border-y border-solid border-gray-200 bg-[#f2f2f2]">
+              <th scope="col" className="p-4 text-center">
                 STT
               </th>
               <th scope="col" className="p-4 text-left">
@@ -130,6 +130,9 @@ export default function UserList() {
               </th>
               <th scope="col" className="p-4 text-left">
                 Email
+              </th>
+              <th scope="col" className="p-4 text-left">
+                Loại tài khoản
               </th>
               <th scope="col" className="p-4 text-left">
                 Vai trò
@@ -160,30 +163,47 @@ export default function UserList() {
                 <td className="p-4 text-left">{user.name}</td>
                 <td className="p-4 text-left">{user.email}</td>
                 <td className="p-4 text-left">
+                  {user.isAdmin && (
+                    <span className="ml-2 capitalize text-xs px-4 py-1 bg-blue-500 rounded-full text-white">
+                      Admin
+                    </span>
+                  )}
+                  {user.isSupport && (
+                    <span className="ml-2 capitalize text-xs px-4 py-1 bg-blue-500 rounded-full text-white">
+                      Support
+                    </span>
+                  )}
+                  {!user.isAdmin && !user.isSupport && (
+                    <span className="ml-2 capitalize text-xs px-4 py-1 bg-blue-500 rounded-full text-white">
+                      User
+                    </span>
+                  )}
+                </td>
+                <td className="p-4 text-left">
                   <ul className="flex flex-wrap gap-2">
                     {user.roles.map(({ role }) => (
                       <li
                         key={role.id}
-                        className="capitalize text-xs px-2 py-1 bg-blue-500 rounded-full text-white"
+                        className="capitalize text-xs px-4 py-1 bg-blue-500 rounded-full text-white"
                       >
                         {role.name}
                       </li>
                     ))}
                     {!user?.roles?.length && (
-                      <span className="capitalize text-xs px-2 py-1 bg-blue-500 rounded-full text-white">
-                        default
+                      <span className="capitalize text-xs px-4 py-1 bg-gray-500 rounded-full text-white">
+                        None
                       </span>
                     )}
                   </ul>
                 </td>
                 <td className="p-4 text-left">
                   {user.verify ? (
-                    <span className="inline-block text-xs px-2 py-1 text-white bg-green-500 rounded-full">
-                      Đã kích hoạt
+                    <span className="inline-block text-xs px-4 py-1 text-white bg-green-500 rounded-full">
+                      Active
                     </span>
                   ) : (
-                    <span className="inline-block text-xs px-2 py-1 text-white bg-red-500 rounded-full">
-                      Chưa kích hoạt
+                    <span className="inline-block text-xs px-4 py-1 text-white bg-red-500 rounded-full">
+                      Inactive
                     </span>
                   )}
                 </td>

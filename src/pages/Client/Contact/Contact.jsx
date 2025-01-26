@@ -1,16 +1,21 @@
-import * as yup from "yup";
-import { useForm } from "react-hook-form";
+import LoadingModal from "@/components/Loading/LoadingModal";
+import { regex } from "@/constants/regex";
+import { userService } from "@/services/userService";
 import { yupResolver } from "@hookform/resolvers/yup";
+import HomeIcon from "@mui/icons-material/Home";
 import { Breadcrumbs, Typography } from "@mui/material";
-import { Link } from "react-router-dom";
+import { useForm } from "react-hook-form";
 import { FaHeadphonesAlt, FaSnapchat } from "react-icons/fa";
+import { FaPhone } from "react-icons/fa6";
 import {
   IoAlarmOutline,
   IoInformationCircleOutline,
-  IoLocationOutline,
+  IoMail,
 } from "react-icons/io5";
-import HomeIcon from "@mui/icons-material/Home";
-import { regex } from "@/constants/regex";
+import { MdLocationOn } from "react-icons/md";
+import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
+import * as yup from "yup";
 
 export default function Contact() {
   const schema = yup.object({
@@ -33,17 +38,26 @@ export default function Contact() {
     message: yup.string().required("Vui lòng nhập nội dung tin nhắn"),
   });
   const {
+    reset,
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
   } = useForm({
     resolver: yupResolver(schema),
   });
-  const handleSendMessage = (data) => {
-    console.log("Message:", data);
+  const handleSendMessage = async (data) => {
+    try {
+      const response = await userService.contactAdmin(data);
+      return toast.success(response.message);
+    } catch (error) {
+      return toast.error(error.response.data.message);
+    } finally {
+      reset();
+    }
   };
   return (
     <>
+      {isSubmitting && <LoadingModal />}
       <section className="py-10 lg:py-20 mt-[90px] xl:mt-0 xl:h-[450px] xl:pt-[90px] bg-no-repeat bg-cover bg-bottom bg-[url('https://ciyashop.potenzaglobalsolutions.com/decor/wp-content/uploads/sites/84/2020/08/page-header-1.jpg')]">
         <div className="max-w-full lg:max-w-[1300px] mx-auto px-4 py-2 h-full flex flex-col justify-center gap-y-5">
           <h1 className="text-[22px] text-center lg:text-left lg:text-4xl font-semibold text-[#323232]">
@@ -81,30 +95,20 @@ export default function Contact() {
               hỏi nào, vui lòng gửi tin nhắn cho chúng tôi. Chúng tôi rất mong
               nhận được phản hồi từ bạn! Chúng tôi trả lời trong vòng 24 giờ!
             </p>
-            <ul>
-              <li className="flex gap-2 mb-4">
-                <IoLocationOutline className="text-2xl" />
-                <p className="text-xl font-semibold leading-none">
-                  17504 Carlton Cuevas Rd,
-                  <br />
-                  <span className="text-[15px]">Gulfport, MS, 39503</span>
+            <ul className="text-[15px]">
+              <li className="flex items-center gap-2 mb-4">
+                <MdLocationOn className="text-2xl" />
+                <p className="leading-none">
+                  Số 1 Ngõ 41 Trần Duy Hưng, Trung Hoà, Cầu Giấy, Hà Nội
                 </p>
               </li>
-              <li className="flex gap-2 mb-4">
-                <IoLocationOutline className="text-2xl" />
-                <p className="text-xl font-semibold leading-none">
-                  17504 Carlton Cuevas Rd,
-                  <br />
-                  <span className="text-[15px]">Gulfport, MS, 39503</span>
-                </p>
+              <li className="flex items-center gap-2 mb-4">
+                <FaPhone className="text-2xl" />
+                <p className="leading-none">0865 783 359</p>
               </li>
-              <li className="flex gap-2 mb-4">
-                <IoLocationOutline className="text-2xl" />
-                <p className="text-xl font-semibold leading-none">
-                  17504 Carlton Cuevas Rd,
-                  <br />
-                  <span className="text-[15px]">Gulfport, MS, 39503</span>
-                </p>
+              <li className="flex items-center gap-2 mb-4">
+                <IoMail className="text-2xl" />
+                <p className="leading-none">xphong.fullstack03@gmail.com</p>
               </li>
             </ul>
           </div>

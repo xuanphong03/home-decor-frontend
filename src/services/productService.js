@@ -21,4 +21,8 @@ export const productService = {
     const url = `/products/recommend`;
     return axiosClient.get(url, { params });
   },
+  reviewProduct(payload) {
+    const url = `/products/review-product`;
+    return axiosClient.post(url, payload);
+  },
 };

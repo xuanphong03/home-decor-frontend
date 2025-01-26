@@ -39,8 +39,8 @@ export const orderService = {
     const url = `/user/orders`;
     return axiosClient.get(url, { params });
   },
-  userRemove(id) {
-    const url = `/user/orders/${id}`;
+  userCancel(id) {
+    const url = `/orders/${id}`;
     return axiosClient.delete(url);
   },
   userGetDetail(id) {

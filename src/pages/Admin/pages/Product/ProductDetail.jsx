@@ -66,10 +66,10 @@ export default function ProductDetail() {
             Thống kê
           </Link>
           <Link to="/admin/products" className="hover:underline">
-            Sản phẩm
+            Danh sách Sản phẩm
           </Link>
           <Link to="#" className="text-secondary">
-            Chỉnh sửa sản phẩm
+            {productDetail?.name}
           </Link>
         </Breadcrumbs>
       </div>

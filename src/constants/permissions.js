@@ -55,4 +55,13 @@ export const PERMISSIONS = [
       { name: "Xóa", permission: "users.delete" },
     ],
   },
+  {
+    name: "Phương thức thanh toán",
+    permissions: [
+      { name: "Xem", permission: "paymentMethods.read" },
+      { name: "Thêm", permission: "paymentMethods.create" },
+      { name: "Sửa", permission: "paymentMethods.update" },
+      { name: "Xóa", permission: "paymentMethods.delete" },
+    ],
+  },
 ];

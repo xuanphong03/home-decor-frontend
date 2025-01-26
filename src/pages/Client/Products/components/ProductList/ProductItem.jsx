@@ -24,6 +24,7 @@ export default function ProductItem(product) {
     quantity,
     originalPrice,
     finalPrice,
+    new: isNew,
   } = product;
   const dispatch = useDispatch();
   const { setCartItems } = useContext(AppContext);
@@ -94,8 +95,9 @@ export default function ProductItem(product) {
             className="absolute w-full h-full object-cover group-hover:scale-110 duration-500 transition-all"
           />
           <div className="absolute top-3 right-0">
-            <div className="mb-2">
+            <div className="mb-2 flex flex-col gap-2">
               {salePercent > 0 && <Tag type={tag_types.SALE} />}
+              {isNew && <Tag type={tag_types.NEW} />}
             </div>
           </div>
           <div className="absolute top-3 left-3 text-xs text-white">

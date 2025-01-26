@@ -53,4 +53,15 @@
     border-right: 6px solid #323232;
     border-bottom: 6px solid #323232;
   }
+  &.tag-new {
+    background-color: #ffa800;
+  }
+  &.tag-new::before {
+    border-top: 6px solid #ffa800;
+    border-right: 6px solid #ffa800;
+  }
+  &.tag-new::after {
+    border-right: 6px solid #ffa800;
+    border-bottom: 6px solid #ffa800;
+  }
 }

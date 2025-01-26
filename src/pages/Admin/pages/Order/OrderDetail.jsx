@@ -4,6 +4,7 @@ import moment from "moment";
 import { useEffect, useMemo, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import UpdateStatus from "./UpdateStatus";
+import { ORDER } from "@/constants/order-status";
 
 export default function OrderDetail() {
   const params = useParams();
@@ -143,7 +144,7 @@ export default function OrderDetail() {
               </tr>
               <tr>
                 <th className="p-2 text-left border border-solid border-gray-300">
-                  Trạng thái thanh toán
+                  Thanh toán
                 </th>
                 <td className="p-2 text-left border border-solid border-gray-300">
                   {orderDetail?.paymentStatus
@@ -153,17 +154,20 @@ export default function OrderDetail() {
               </tr>
               <tr>
                 <th className="p-2 text-left border border-solid border-gray-300">
-                  Trạng thái vận chuyển
+                  Trạng thái
                 </th>
                 <td className="p-2 text-left border border-solid border-gray-300">
-                  {orderDetail?.shippingStatus === "PENDING" && (
+                  {orderDetail?.shippingStatus === ORDER.PENDING && (
                     <span>Chờ xác nhận</span>
                   )}
-                  {orderDetail?.shippingStatus === "SHIPPING" && (
+                  {orderDetail?.shippingStatus === ORDER.SHIPPING && (
                     <span>Đang vận chuyển</span>
                   )}
-                  {orderDetail?.shippingStatus === "RECEIVED" && (
+                  {orderDetail?.shippingStatus === ORDER.RECEIVED && (
                     <span>Đã nhận hàng</span>
+                  )}
+                  {orderDetail?.shippingStatus === ORDER.CANCELED && (
+                    <span>Đã hủy</span>
                   )}
                 </td>
               </tr>

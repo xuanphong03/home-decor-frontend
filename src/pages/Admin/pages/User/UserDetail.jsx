@@ -4,12 +4,14 @@ import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import UserSetting from "./UserSetting";
 import { toast } from "react-toastify";
+import UserUpdate from "./UserUpdate";
 
 export default function UserDetail() {
   const { id } = useParams();
   const [alert, setAlert] = useState(null);
   const [userDetail, setUserDetail] = useState(null);
-  const [openUserSetting, setOpenUserSetting] = useState(true);
+  const [openUserSetting, setOpenUserSetting] = useState(false);
+  const [openUserUpdate, setOpenUserUpdate] = useState(false);
 
   const getUserDetail = async () => {
     try {
@@ -19,7 +21,7 @@ export default function UserDetail() {
       setAlert({ type: "error", message: error.response.data.message });
     }
   };
-  const handleUpdateUser = async (data) => {
+  const handleUpdateUserRolesAndPermissions = async (data) => {
     try {
       const rolesOnUser = data.roles;
       const permissionsOnUser = data.permissions;
@@ -43,6 +45,18 @@ export default function UserDetail() {
     }
   };
 
+  const handleUpdateUserType = async (data) => {
+    try {
+      const response = await userService.updateUserById(userDetail.id, data);
+      setUserDetail(response.data);
+      return toast.success(response.message);
+    } catch (error) {
+      return toast.error(error.response.data.message);
+    } finally {
+      setOpenUserUpdate(false);
+    }
+  };
+
   useEffect(() => {
     getUserDetail();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -57,7 +71,19 @@ export default function UserDetail() {
             <UserSetting
               user={userDetail}
               onClose={() => setOpenUserSetting(false)}
-              onSubmit={handleUpdateUser}
+              onSubmit={handleUpdateUserRolesAndPermissions}
+            />
+          </div>
+        </div>
+      )}
+      {openUserUpdate && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center">
+          <div className="absolute inset-0 bg-black bg-opacity-30"></div>
+          <div className="relative">
+            <UserUpdate
+              user={userDetail}
+              onClose={() => setOpenUserUpdate(false)}
+              onSubmit={handleUpdateUserType}
             />
           </div>
         </div>
@@ -68,7 +94,7 @@ export default function UserDetail() {
             Thống kê
           </Link>
           <Link to="/admin/users" className="hover:underline">
-            Người dùng
+            Danh sách người dùng
           </Link>
           <Link to="#" className="text-secondary">
             {userDetail?.name}
@@ -85,12 +111,20 @@ export default function UserDetail() {
       <div className="px-10 py-5">
         <div className="flex items-center justify-between mb-6">
           <h2 className="text-[28px] font-medium">Thông tin người dùng</h2>
-          <button
-            onClick={() => setOpenUserSetting(true)}
-            className="px-5 py-2 bg-blue-500 text-white rounded text-sm"
-          >
-            Gán quyền và vai trò
-          </button>
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => setOpenUserUpdate(true)}
+              className="px-5 py-2 bg-blue-500 text-white rounded text-sm hover:bg-opacity-80"
+            >
+              Cập nhật tài khoản
+            </button>
+            <button
+              onClick={() => setOpenUserSetting(true)}
+              className="px-5 py-2 bg-blue-500 text-white rounded text-sm hover:bg-opacity-80"
+            >
+              Gán quyền và vai trò
+            </button>
+          </div>
         </div>
         <div className="py-2 grid grid-cols-12 gap-10">
           <section className="col-span-4">
@@ -113,9 +147,11 @@ export default function UserDetail() {
                   {userDetail?.phoneNumber}
                 </li>
                 {userDetail?.verify && (
-                  <p className="text-center text-sm text-white bg-primary rounded-full py-1 px-3">
-                    Đã kích hoạt
-                  </p>
+                  <li className="text-center">
+                    <span className="text-sm text-white bg-green-500 rounded-full py-1 px-4">
+                      Active
+                    </span>
+                  </li>
                 )}
                 {!userDetail?.verify && (
                   <li className="text-center  text-white text-sm">

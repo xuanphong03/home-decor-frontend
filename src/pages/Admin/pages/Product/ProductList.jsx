@@ -89,8 +89,8 @@ export default function ProductList() {
           <Link to="/admin" className="hover:underline">
             Thống kê
           </Link>
-          <Link to="#" className="text-secondary">
-            Sản phẩm
+          <Link to="/admin/products" className="text-secondary">
+            Danh sách sản phẩm
           </Link>
         </Breadcrumbs>
       </div>
@@ -134,12 +134,12 @@ export default function ProductList() {
                 </form>
               </td>
             </tr>
-            <tr className="px-4 border-y border-solid border-gray-200">
+            <tr className="px-4 border-y border-solid border-gray-200 bg-[#f2f2f2]">
               <th scope="col" className="p-4 text-left w-[30%] max-w-[30%]">
                 Sản phẩm
               </th>
               <th scope="col" className="p-4 text-left">
-                Loại sản phẩm
+                Danh mục
               </th>
               <th scope="col" className="p-4 text-left">
                 Giá
@@ -168,7 +168,12 @@ export default function ProductList() {
                 className="px-4 border-y border-solid border-gray-200"
               >
                 <td className="p-4 text-left">
-                  <div className="flex items-center gap-5">
+                  <div className="flex items-center gap-5 relative">
+                    {product?.new && (
+                      <span className="absolute top-0 left-0 -translate-y-1/2 text-white bg-primary px-1 py-[2px] rounded text-xs">
+                        New
+                      </span>
+                    )}
                     <div className="flex items-center justify-center size-20">
                       <img
                         alt={product?.name}

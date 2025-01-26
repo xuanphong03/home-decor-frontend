@@ -63,7 +63,7 @@ export default function ProductForm({
     setValue,
     getValues,
     reset,
-    formState: { errors, isSubmitSuccessful },
+    formState: { errors },
   } = useForm({
     resolver: yupResolver(schema),
     defaultValues: {
@@ -82,7 +82,7 @@ export default function ProductForm({
   const handleSubmitForm = async (data) => {
     if (onSubmit) {
       await onSubmit(data);
-      if (isSubmitSuccessful && type === form_types.CREATE) {
+      if (type === form_types.CREATE) {
         reset();
         setValue("productCategoryId", categoryList[0].id);
       }
@@ -109,6 +109,7 @@ export default function ProductForm({
   const getCategoryList = async () => {
     try {
       const response = await categoryService.getAll();
+      console.log(response);
       const { categories } = response.data;
       setCategoryList(categories);
     } catch (error) {

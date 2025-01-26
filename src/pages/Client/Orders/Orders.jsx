@@ -6,7 +6,7 @@ import HomeIcon from "@mui/icons-material/Home";
 import { orderService } from "@/services/orderService";
 import moment from "moment";
 import OrderDetail from "./OrderDetail";
-import { ORDER_STATUS } from "@/constants/order-status";
+import { ORDER, ORDER_STATUS } from "@/constants/order-status";
 import queryString from "query-string";
 import LoadingModal from "@/components/Loading/LoadingModal";
 
@@ -99,7 +99,7 @@ export default function Orders() {
   const handleCancelOrder = async (orderId) => {
     try {
       if (confirm("Bạn chắc chắn muốn hủy đơn hàng này chứ?")) {
-        const response = await orderService.userRemove(orderId);
+        const response = await orderService.userCancel(orderId);
         setAlert({ type: "success", message: response.message });
       }
     } catch (error) {
@@ -207,14 +207,17 @@ export default function Orders() {
               >
                 <td className="p-4 text-center">{orderItem.id}</td>
                 <td className="p-4 text-center">
-                  {orderItem.shippingStatus === "PENDING" && (
+                  {orderItem.shippingStatus === ORDER.PENDING && (
                     <span>Chờ xác nhận</span>
                   )}
-                  {orderItem.shippingStatus === "SHIPPING" && (
+                  {orderItem.shippingStatus === ORDER.SHIPPING && (
                     <span>Đang vận chuyển</span>
                   )}
-                  {orderItem.shippingStatus === "RECEIVED" && (
+                  {orderItem.shippingStatus === ORDER.RECEIVED && (
                     <span>Đã nhận hàng</span>
+                  )}
+                  {orderItem.shippingStatus === ORDER.CANCELED && (
+                    <span>Đã hủy</span>
                   )}
                 </td>
                 <td className="p-4 text-center">

@@ -21,7 +21,7 @@ import ProductReview from "./components/ProductDetail/ProductReview";
 import ProductDescription from "./components/ProductDetail/ProductDescription";
 import { Alert, Box, Breadcrumbs, Skeleton, Typography } from "@mui/material";
 import ProductItem from "./components/ProductList/ProductItem";
-
+import ReactImageMagnifier from "simple-image-magnifier/react";
 // Constants
 import { tag_types } from "@/constants/tag-types";
 
@@ -34,6 +34,7 @@ import "./ProductDetail.scss";
 import { cartService } from "@/services/cartService";
 import { AppContext } from "@/App";
 import { toast } from "react-toastify";
+import { cloneDeep } from "lodash";
 
 export default function ProductDetail() {
   const settings = {
@@ -143,6 +144,25 @@ export default function ProductDetail() {
     }
   };
 
+  const handleReviewProduct = async (data) => {
+    try {
+      const payload = {
+        productId: +id,
+        rating: data?.rating,
+        content: data?.review,
+      };
+      const response = await productService.reviewProduct(payload);
+      setProductDetail((prevData) => {
+        const nextData = cloneDeep(prevData);
+        nextData.reviews = [...nextData.reviews, response.data];
+        return nextData;
+      });
+      return toast.success(response.message);
+    } catch (error) {
+      return toast.error(error.response.data.message);
+    }
+  };
+
   useEffect(() => {
     getProductDetail();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -192,10 +212,12 @@ export default function ProductDetail() {
           <div className="col-span-1">
             {!loading && (
               <div className="relative w-full mb-2">
-                <img
+                <ReactImageMagnifier
                   alt={productDetail?.name}
-                  src={productDetail?.imageUrl}
-                  className="max-w-full h-auto "
+                  srcPreview={productDetail?.imageUrl}
+                  srcOriginal={productDetail?.imageUrl}
+                  width={"100%"}
+                  className="max-w-full h-auto cursor-zoom-in"
                 />
                 <div className="absolute top-4 right-0">
                   <div className="mb-2">
@@ -408,7 +430,7 @@ export default function ProductDetail() {
                   htmlFor="tab-review"
                   className="block px-6 py-3 cursor-pointer hover:text-primary transition-colors font-medium"
                 >
-                  Đánh giá (0)
+                  Đánh giá ({productDetail?.reviews?.length || 0})
                 </label>
                 {activeTabIndex === 1 && (
                   <span className="absolute top-full left-0 w-full border-2 border-solid border-white"></span>
@@ -419,7 +441,12 @@ export default function ProductDetail() {
           {activeTabIndex === 0 && productDetail && (
             <ProductDescription description={productDetail.description} />
           )}
-          {activeTabIndex === 1 && <ProductReview />}
+          {activeTabIndex === 1 && (
+            <ProductReview
+              onSubmit={handleReviewProduct}
+              reviews={productDetail?.reviews}
+            />
+          )}
         </div>
       </section>
       {relatedProductList.length > 0 && (

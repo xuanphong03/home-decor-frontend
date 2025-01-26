@@ -1,10 +1,10 @@
-import { Alert, Breadcrumbs } from "@mui/material";
-import CategoryForm from "./components/CategoryForm";
 import { form_types } from "@/constants/form-types";
 import { status } from "@/constants/status";
-import { Link } from "react-router-dom";
-import { useState } from "react";
 import { categoryService } from "@/services/categoryService";
+import { Alert, Breadcrumbs } from "@mui/material";
+import { useState } from "react";
+import { Link } from "react-router-dom";
+import CategoryForm from "./components/CategoryForm";
 
 export default function CategoryCreate() {
   const [alert, setAlert] = useState(null);
@@ -35,9 +35,9 @@ export default function CategoryCreate() {
             Thống kê
           </Link>
           <Link to="/admin/categories" className="hover:underline">
-            Danh mục
+            Danh sách danh mục
           </Link>
-          <Link to="/admin/categories" className="text-secondary">
+          <Link to="#" className="text-secondary">
             Tạo danh mục
           </Link>
         </Breadcrumbs>

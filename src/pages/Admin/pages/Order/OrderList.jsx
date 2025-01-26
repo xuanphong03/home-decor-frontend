@@ -1,6 +1,6 @@
 import { AppContext } from "@/App";
 import LoadingModal from "@/components/Loading/LoadingModal";
-import { ORDER_STATUS } from "@/constants/order-status";
+import { ORDER, ORDER_STATUS } from "@/constants/order-status";
 import { orderService } from "@/services/orderService";
 import { Breadcrumbs, Pagination } from "@mui/material";
 import moment from "moment";
@@ -101,8 +101,8 @@ export default function OrderList() {
           <Link to="/admin" className="hover:underline">
             Thống kê
           </Link>
-          <Link to="#" className="text-secondary">
-            Sản phẩm
+          <Link to="/admin/orders" className="text-secondary">
+            Danh sách đơn hàng
           </Link>
         </Breadcrumbs>
       </div>
@@ -160,35 +160,31 @@ export default function OrderList() {
                 </div>
               </td>
             </tr>
-            <tr className="px-4 border-y border-solid border-gray-200">
+            <tr className="px-4 border-y border-solid border-gray-200 bg-[#f2f2f2]">
               <th scope="col" className="p-4 text-center">
-                Mã đơn
-              </th>
-              <th scope="col" className="p-4 text-left">
-                Người dùng
+                Mã đơn hàng
               </th>
               <th scope="col" className="p-4 text-center">
-                Phương thức thanh toán
+                Ngày tạo
               </th>
               <th scope="col" className="p-4 text-center">
-                Trạng thái thanh toán
+                Thanh toán
               </th>
               <th scope="col" className="p-4 text-center">
-                Trạng thái đơn hàng
+                Vận chuyển
               </th>
               <th scope="col" className="p-4 text-center">
-                Ngày đặt
+                Tổng
               </th>
               <th scope="col" className="p-4 text-right w-44"></th>
             </tr>
           </thead>
           <tbody>
             {!loading && !orderList.length && (
-              <tr
-                colSpan={6}
-                className="px-4 border-y border-solid border-gray-200"
-              >
-                <td className="p-4 text-left">Không có sản phẩm nào phù hợp</td>
+              <tr className="px-4 border-y border-solid border-gray-200">
+                <td colSpan={7} className="p-4 text-center">
+                  Không có đơn hàng nào
+                </td>
               </tr>
             )}
             {orderList.map((order) => (
@@ -197,8 +193,9 @@ export default function OrderList() {
                 className="px-4 border-y border-solid border-gray-200"
               >
                 <td className="p-4 text-center">{order.id}</td>
-                <td className="p-4 text-left">{order.user.email}</td>
-                <td className="p-4 text-center">{order.paymentMethod.name}</td>
+                <td className="p-4 text-center">
+                  {moment(order.createdAt).format("DD/MM/YYYY")}
+                </td>
                 <td className="p-4 text-center">
                   {order.paymentStatus ? (
                     <span>Đã thanh toán</span>
@@ -207,18 +204,24 @@ export default function OrderList() {
                   )}
                 </td>
                 <td className="p-4 text-center">
-                  {order.shippingStatus === "PENDING" && (
+                  {order.shippingStatus === ORDER.PENDING && (
                     <span>Chờ xác nhận</span>
                   )}
-                  {order.shippingStatus === "SHIPPING" && (
+                  {order.shippingStatus === ORDER.SHIPPING && (
                     <span>Đang vận chuyển</span>
                   )}
-                  {order.shippingStatus === "RECEIVED" && (
+                  {order.shippingStatus === ORDER.RECEIVED && (
                     <span>Đã nhận hàng</span>
+                  )}
+                  {order.shippingStatus === ORDER.CANCELED && (
+                    <span>Đã hủy</span>
                   )}
                 </td>
                 <td className="p-4 text-center">
-                  {moment(order.createdAt).format("DD/MM/YYYY")}
+                  {order?.totalPrice?.toLocaleString("vi-VN", {
+                    style: "currency",
+                    currency: "VND",
+                  })}
                 </td>
                 <td className="p-4 text-center">
                   <Link

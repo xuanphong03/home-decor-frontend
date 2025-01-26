@@ -2,19 +2,33 @@ import { Alert, Breadcrumbs, Snackbar, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { RiDeleteBin6Line } from "react-icons/ri";
-import { addToCart } from "@/stores/slices/cartSlice";
 import { removeFromWishlist } from "@/stores/slices/wishlistSlice";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import HomeIcon from "@mui/icons-material/Home";
+import { toast } from "react-toastify";
+import { cartService } from "@/services/cartService";
+import { AppContext } from "@/App";
 
 export default function WishList() {
   const dispatch = useDispatch();
+  const { setCartItems } = useContext(AppContext);
   const { productList } = useSelector((state) => state.wishlist);
   const [openSnackbar, setOpenSnackbar] = useState(false);
-
-  const handleAddToCart = (product) => {
-    if (!product.quantity) return;
-    dispatch(addToCart({ product, quantity: 1 }));
+  const auth = useSelector((state) => state.auth);
+  const isAuthenticated = Boolean(auth?.accessToken);
+  const handleAddToCart = async (product) => {
+    try {
+      if (!product.quantity) return;
+      if (!isAuthenticated) return toast.info("Vui lòng đăng nhập");
+      const response = await cartService.addToCart({
+        id: product.id,
+        quantity: 1,
+      });
+      setCartItems(response.data.products);
+      return toast.success("Đã thêm vào giỏ hàng!");
+    } catch (error) {
+      return toast.error(error.response.data.message);
+    }
   };
 
   const handleRemoveFromWishlist = (productId) => {
@@ -103,7 +117,7 @@ export default function WishList() {
                     </div>
                   </td>
                   <td className="py-[10px] px-5 text-center">
-                    {product.price.toLocaleString("vi-VN", {
+                    {product.finalPrice.toLocaleString("vi-VN", {
                       style: "currency",
                       currency: "VND",
                     })}

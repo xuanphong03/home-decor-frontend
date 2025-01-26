@@ -11,7 +11,7 @@ export default function RatingField({ id, name, label, control }) {
         name={name}
         control={control}
         render={({ field }) => (
-          <Rating size="medium" id={id} defaultValue={2.5} {...field} />
+          <Rating size="medium" id={id} defaultValue={0} {...field} />
         )}
       />
     </div>

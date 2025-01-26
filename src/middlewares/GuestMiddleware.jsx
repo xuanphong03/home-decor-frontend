@@ -7,9 +7,7 @@ export default function GuestMiddleware() {
   const { accessToken } = useSelector((state) => state.auth);
   const { profile } = useContext(AppContext);
   const isAuthenticated = Boolean(accessToken);
-  // if (true) {
-  //   return <div className="fixed inset-0 bg-white">Loading</div>;
-  // }
+
   if (!isAuthenticated) {
     return <Navigate to="/login" />;
   }

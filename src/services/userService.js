@@ -27,4 +27,14 @@ export const userService = {
     const url = `/admin/users/${userId}/roles`;
     return axiosClient.put(url, rolesOnUsr);
   },
+
+  updateUserById(userId, data) {
+    const url = `admin/users/${userId}/user`;
+    return axiosClient.patch(url, data);
+  },
+
+  contactAdmin(data) {
+    const url = `/contact`;
+    return axiosClient.post(url, data);
+  },
 };

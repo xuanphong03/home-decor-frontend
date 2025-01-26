@@ -5,6 +5,7 @@ import { Controller, useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import LoadingModal from "@/components/Loading/LoadingModal";
+import { IoMdClose } from "react-icons/io";
 
 export default function UserSetting({ user, onSubmit, onClose }) {
   const schema = yup.object().shape({
@@ -41,7 +42,7 @@ export default function UserSetting({ user, onSubmit, onClose }) {
     }
   };
 
-  const handleClickCancel = () => {
+  const handleClose = () => {
     if (onClose) {
       onClose();
     }
@@ -64,8 +65,17 @@ export default function UserSetting({ user, onSubmit, onClose }) {
   return (
     <>
       {isSubmitting && <LoadingModal />}
-      <div className="p-5 shadow bg-white rounded w-[800px] h-[600px] overflow-y-auto">
-        <h2 className="font-medium text-xl mb-4">Gán quyền cho người dùng</h2>
+      <div className="p-5 shadow bg-white rounded w-[800px] h-[600px] overflow-y-auto custom-scrollbar">
+        <div className="flex items-center justify-between mb-4">
+          <h2 className="font-medium text-xl">Gán quyền cho người dùng</h2>
+          <button
+            type="button"
+            onClick={handleClose}
+            className="text-2xl hover:bg-gray-200"
+          >
+            <IoMdClose />
+          </button>
+        </div>
         <form onSubmit={handleSubmit(handleSubmitForm)}>
           <div className="mb-5">
             <h3 className="mb-2">Vai trò</h3>
@@ -150,10 +160,10 @@ export default function UserSetting({ user, onSubmit, onClose }) {
           <div className="text-right text-sm">
             <button
               type="button"
-              onClick={handleClickCancel}
-              className="px-5 py-2 text-white bg-red-500 hover:bg-opacity-80 transition-all rounded"
+              onClick={handleClose}
+              className="px-5 py-2 text-white bg-gray-500 hover:bg-opacity-80 transition-all rounded"
             >
-              Hủy bỏ
+              Đóng
             </button>
             <button
               type="submit"

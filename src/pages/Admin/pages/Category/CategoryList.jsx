@@ -85,8 +85,8 @@ export default function CategoryList() {
           <Link to="/admin" className="hover:underline">
             Thống kê
           </Link>
-          <Link to="#" className="text-secondary">
-            Danh mục
+          <Link to="/admin/categories" className="text-secondary">
+            Danh sách danh mục
           </Link>
         </Breadcrumbs>
       </div>
@@ -128,7 +128,7 @@ export default function CategoryList() {
                 </form>
               </td>
             </tr>
-            <tr className="px-4 border-y border-solid border-gray-200">
+            <tr className="px-4 border-y border-solid border-gray-200 bg-[#f2f2f2]">
               <th scope="col" className="p-4 text-left w-[40%] max-w-[40%]">
                 Danh mục
               </th>

@@ -148,7 +148,7 @@ export default function NewProductList() {
 
   const getProducts = async () => {
     try {
-      const response = await productService.getAll();
+      const response = await productService.getAll({ _new: true });
       const { products } = response.data;
       setProductList(products);
     } catch (error) {

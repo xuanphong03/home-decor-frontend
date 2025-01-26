@@ -53,10 +53,10 @@ export default function CategoryDetail() {
             Thống kê
           </Link>
           <Link to="/admin/categories" className="hover:underline">
-            Danh mục
+            Danh sách danh mục
           </Link>
           <Link to="/admin/categories" className="text-secondary">
-            Tạo danh mục
+            {categoryDetail?.name}
           </Link>
         </Breadcrumbs>
       </div>
