@@ -30,7 +30,7 @@ export default function FilterByCategory() {
             {categoryList.map((cat) => (
               <li key={cat.id}>
                 <Link
-                  to={location.pathname + `?categoryId=${cat.id}`}
+                  to={location.pathname + `?category=${cat.name}`}
                   className="inline-block py-2 text-sm text-[#777777] hover:text-primary transition-colors"
                 >
                   {cat.name}

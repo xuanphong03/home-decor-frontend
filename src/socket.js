@@ -4,7 +4,7 @@ import { io } from "socket.io-client";
 const URL =
   process.env.NODE_ENV === "production"
     ? undefined
-    : "http://localhost:3002/chats";
+    : "http://61.14.233.205:3002/chats";
 
 export const socket = io(URL, {
   auth: {

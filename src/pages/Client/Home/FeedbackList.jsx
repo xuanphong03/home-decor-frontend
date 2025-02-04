@@ -29,7 +29,7 @@ export default function FeedbackList() {
                   <div className="flex-shrink-0 size-24 rounded-full overflow-hidden border-2 border-solid border-primary mr-[35px]">
                     <img
                       alt="avatar"
-                      src={`https://scontent.fhan5-10.fna.fbcdn.net/v/t1.6435-9/142346956_2956946411258841_2704488301807677395_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=a5f93a&_nc_ohc=drHbfSnU5cYQ7kNvgEnNajQ&_nc_zt=23&_nc_ht=scontent.fhan5-10.fna&_nc_gid=AcACyGawCFTIjJ1yQIdSn4-&oh=00_AYA6RkQy2iwJjIY2VfBgXI0WA5TESuxC30ZECEzk1Lnxng&oe=678E292E`}
+                      src={`https://cellphones.com.vn/sforum/wp-content/uploads/2024/02/avatar-anh-meo-cute-5.jpg`}
                       className="w-full aspect-square object-cover"
                     />
                   </div>
