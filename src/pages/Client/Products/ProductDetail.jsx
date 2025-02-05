@@ -295,15 +295,16 @@ export default function ProductDetail() {
             )}
             {!loading && (
               <div className="mb-5">
-                <span
-                  className={`${
-                    productDetail.quantity > 0 ? "bg-[#61c70e]" : "bg-red-500"
-                  } text-sm px-5 py-2 rounded text-white`}
-                >
-                  {productDetail.quantity > 0
-                    ? `${productDetail?.quantity} sản phẩm`
-                    : `Hết hàng`}
-                </span>
+                {productDetail?.quantity > 0 && (
+                  <span className="bg-[#61c70e] text-sm px-5 py-2 rounded text-white">
+                    {productDetail.quantity}
+                  </span>
+                )}
+                {productDetail?.quantity <= 0 && (
+                  <div className="px-5 py-[15px] border-dashed border border-red-500 rounded text-center text-red-500 uppercase font-medium">
+                    Hết hàng
+                  </div>
+                )}
               </div>
             )}
             <div className="flex items-center gap-2 mb-5">

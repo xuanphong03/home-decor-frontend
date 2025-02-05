@@ -27,7 +27,6 @@ export default function CategoryList() {
     _page: queryParams._page,
     _total: 100,
   });
-
   const getCategories = async () => {
     try {
       setLoading(true);
