@@ -4,15 +4,15 @@ export default function ServiceList() {
   return (
     <>
       <section>
-        <div className="flex py-[160px] px-[110px] items-center h-[550px] bg-center bg-[url('https://ciyashop.potenzaglobalsolutions.com/decor/wp-content/uploads/sites/84/2020/08/section-bg1.jpg?id=13287')]">
+        <div className="flex px-[15px] py-[60px] lg:py-[160px] lg:px-[110px] items-center lg:h-[550px] bg-center bg-[url('https://ciyashop.potenzaglobalsolutions.com/decor/wp-content/uploads/sites/84/2020/08/section-bg1.jpg?id=13287')]">
           <div className=" text-white">
             <h3 className="uppercase tracking-[8px] text-[22px] font-medium mb-4">
               Modern Sofa
             </h3>
-            <h2 className="text-[75px] font-bold leading-[74px]">
+            <h2 className="text-[60px] lg:text-[75px] font-bold leading-[74px]">
               Ưu đãi tốt nhất
             </h2>
-            <p className="mb-4 text-lg leading-[22px]">
+            <p className="mb-4 text-base lg:text-lg leading-[22px]">
               You will run aground and become hopelessly stuck in the mud
             </p>
             <button className="uppercase px-7 py-4 text-secondary bg-primary text-sm leading-tight font-medium hover:bg-secondary hover:text-white transition-all">
@@ -20,9 +20,9 @@ export default function ServiceList() {
             </button>
           </div>
         </div>
-        <div className="max-w-full lg:max-w-[1300px] mx-auto">
-          <div className="pt-[100px] pb-[70px] flex gap-4">
-            <div className="basis-1/2 max-w-[50%] bg-[#F6F6F6]">
+        <div className="max-w-full lg:max-w-[1300px] mx-auto px-[15px]">
+          <div className="pt-[100px] pb-[70px] flex gap-4 flex-wrap">
+            <div className="basis-full max-w-full lg:basis-1/2 lg:max-w-[50%] bg-[#F6F6F6]">
               <div className="relative">
                 <img
                   alt=""
@@ -39,7 +39,7 @@ export default function ServiceList() {
                 </div>
               </div>
             </div>
-            <div className="basis-1/2 max-w-[50%] bg-[#F6F6F6]">
+            <div className="basis-full max-w-full lg:basis-1/2 lg:max-w-[50%] bg-[#F6F6F6]">
               <div className="relative">
                 <img
                   alt=""
@@ -80,8 +80,8 @@ export default function ServiceList() {
         </div>
       </section>
       <section className="pb-[70px] max-w-full lg:max-w-[1300px] mx-auto">
-        <div className="flex items-center justify-between -mx-[15px]">
-          <div className="basis-1/3 max-w-[33.333333%] px-[15px] pb-[30px]">
+        <div className="flex flex-wrap px-[15px] items-center justify-between -mx-[15px]">
+          <div className="basis-full max-w-full lg:basis-1/3 lg:max-w-[33.333333%] px-[15px] pb-[30px]">
             <article className="p-[30px] text-center bg-[#fbccd4]">
               <h3 className="text-secondary text-[26px] font-semibold mb-[10px]">
                 Miễn phí vận chuyển
@@ -91,7 +91,7 @@ export default function ServiceList() {
               </p>
             </article>
           </div>
-          <div className="basis-1/3 max-w-[33.333333%] px-[15px] pb-[30px]">
+          <div className="basis-full max-w-full lg:basis-1/3 lg:max-w-[33.333333%] px-[15px] pb-[30px]">
             <article className="p-[30px] text-center bg-[#ccebfb]">
               <h3 className="text-secondary text-[26px] font-semibold mb-[10px]">
                 Hoàn trả trong 30 ngày
@@ -101,7 +101,7 @@ export default function ServiceList() {
               </p>
             </article>
           </div>
-          <div className="basis-1/3 max-w-[33.333333%] px-[15px] pb-[30px]">
+          <div className="basis-full max-w-full lg:basis-1/3 lg:max-w-[33.333333%] px-[15px] pb-[30px]">
             <article className="p-[30px] text-center bg-[#fbeccc]">
               <h3 className="text-secondary text-[26px] font-semibold mb-[10px]">
                 Hỗ trợ 24/7

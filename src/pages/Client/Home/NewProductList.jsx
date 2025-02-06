@@ -135,6 +135,32 @@ export default function NewProductList() {
     arrows: false,
     autoplay: true,
     autoplaySpeed: 5000,
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 3,
+          slidesToScroll: 3,
+          infinite: true,
+          dots: true,
+        },
+      },
+      {
+        breakpoint: 600,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 2,
+          initialSlide: 2,
+        },
+      },
+      {
+        breakpoint: 480,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+        },
+      },
+    ],
   };
   const [productList, setProductList] = useState([]);
   let sliderRef = useRef(null);
@@ -163,7 +189,7 @@ export default function NewProductList() {
   return (
     <section className="mb-[100px] max-w-[1300px] mx-auto px-[15px]">
       <div className="text-center mb-[15px]">
-        <h2 className="text-secondary text-4xl font-bold mb-[10px]">
+        <h2 className="text-secondary text-[22px] lg:text-[32px] font-bold mb-[10px]">
           Sản phẩm mới
         </h2>
         <p className="text-[#777777] text-[15px]">
