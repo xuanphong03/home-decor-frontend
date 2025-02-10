@@ -70,7 +70,7 @@ export default function CategoryList() {
   return (
     <section className="my-[100px] max-w-[1300px] mx-auto px-[15px]">
       <div className="grid grid-cols-12 gap-[30px] text-secondary">
-        <div className="col-span-full lg:col-span-2">
+        <div className="col-span-full lg:col-span-2 px-4">
           <h2 className="capitalize font-bold text-[22px] lg:text-[32px] leading-[36px] mb-[10px]">
             Danh mục trong tuần
           </h2>

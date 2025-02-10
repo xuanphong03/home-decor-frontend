@@ -12,11 +12,11 @@ export default function IntroBanner() {
         duration: 0.25,
         ease: "easeIn",
       }}
-      className="h-[900px] overflow-hidden"
+      className="overflow-hidden"
     >
-      <div className="relative pt-[90px]">
-        <div className=" max-w-full lg:max-w-[1300px] mx-auto px-4 h-[610px] flex items-center">
-          <div className=" flex flex-col gap-5 text-secondary overflow-hidden">
+      <div className="relative pt-[90px] h-[60vh] sm:h-[70vh] md:h-[80vh] lg:h-[90vh] xl:h-screen">
+        <div className="max-w-full lg:max-w-[1300px] h-full mx-auto flex items-center">
+          <div className="w-full flex flex-col gap-5 text-secondary overflow-hidden px-4">
             <motion.h3
               initial={{ x: "-100%" }}
               animate={{ x: "0%" }}
@@ -25,7 +25,7 @@ export default function IntroBanner() {
                 ease: "easeInOut",
                 delay: 0.5,
               }}
-              className="text-lg uppercase font-semibold tracking-wider"
+              className="text-xs md:text-base xl:text-lg uppercase font-semibold tracking-wider"
             >
               Ưu đãi trong hôm nay
             </motion.h3>
@@ -37,7 +37,7 @@ export default function IntroBanner() {
                 ease: "easeIn",
                 delay: 1.5,
               }}
-              className="text-[64px] font-semibold capitalize max-w-[500px] leading-[70px]"
+              className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-semibold capitalize max-w-[50%] md:max-w-[40%] xl:leading-loose"
             >
               Bộ sưu tầm mới Giảm giá 30%
             </motion.h1>
@@ -52,7 +52,7 @@ export default function IntroBanner() {
             >
               <Link
                 to="/products"
-                className="bg-primary text-secondary py-2 block px-9 w-fit text-[15px] font-semibold leading-8 hover:bg-secondary hover:text-white transition-all"
+                className="bg-primary text-secondary py-2 block px-4 md:px-6 lg:px-7 xl:px-9 w-fit text-xs md:text-sm xl:text-[15px] font-semibold xl:leading-8 hover:bg-secondary hover:text-white transition-all"
               >
                 Mua ngay
               </Link>
@@ -65,7 +65,7 @@ export default function IntroBanner() {
               duration: 0.75,
               ease: "easeInOut",
             }}
-            className="absolute top-0 bottom-0 left-1/2 w-[504px] bg-primary"
+            className="absolute top-0 bottom-0 left-1/2 w-[200px] sm:w-[250px] md:w-[300px] lg:w-[400px] xl:w-[500px] bg-primary"
           ></motion.div>
           <div className="absolute top-0 left-1/2 -translate-x-[40%]">
             <motion.div
@@ -86,8 +86,8 @@ export default function IntroBanner() {
           </div>
         </div>
       </div>
-      <div className="bg-[#d1d1d1] h-[100px]"></div>
-      <div className="relative bg-[#ffffff] h-[100px]">
+      <div className="bg-[#d1d1d1] h-[20px] xl:h-[100px]"></div>
+      <div className="relative bg-[#ffffff] h-[20px] xl:h-[100px]">
         <motion.div
           initial={{ y: "50%", opacity: 0 }}
           animate={{ y: "0%", opacity: 1 }}
