@@ -14,7 +14,7 @@ import { AiOutlineMenu } from "react-icons/ai";
 import { MdArrowBackIos } from "react-icons/md";
 
 export default function Header() {
-  const [openMenu, setOpenMenu] = useState(true);
+  const [openMenu, setOpenMenu] = useState(false);
   const dispatch = useDispatch();
   const wishlist = useSelector((state) => state.wishlist);
   const auth = useSelector((state) => state.auth);
