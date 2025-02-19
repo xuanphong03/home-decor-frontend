@@ -11,6 +11,7 @@ import "slick-carousel/slick/slick.css";
 import { permissionService } from "./services/permissionService";
 import { AiOutlineMessage } from "react-icons/ai";
 import ChatBox from "./components/ChatBox/ChatBox";
+import { ConfirmDialogProvider } from "./contexts/ConfirmDialogContext";
 
 export const AppContext = createContext();
 
@@ -84,30 +85,32 @@ function App() {
         permissions,
       }}
     >
-      <RenderLayout />
-      <div className="fixed bottom-10 right-10 text-white">
-        <button
-          onClick={() => setOpenChatBox(!openChatBox)}
-          className={`relative flex h-10 w-10 delay-200 duration-300 ${
-            !openChatBox ? "opacity-100 visible" : "opacity-0 invisible"
-          }`}
-        >
-          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span>
-          <span className="relative inline-flex items-center justify-center text-xl rounded-full w-10 h-10 bg-sky-500">
-            <AiOutlineMessage />
-          </span>
-        </button>
-        <div
-          className={`absolute bottom-0 right-0 transition-all duration-300 ${
-            openChatBox
-              ? "h-[400px] w-[600px] opacity-100 visible"
-              : "h-0 w-0 opacity-0 invisible overflow-hidden"
-          }`}
-        >
-          <ChatBox open={openChatBox} onClose={() => setOpenChatBox(false)} />
+      <ConfirmDialogProvider>
+        <RenderLayout />
+        <div className="fixed bottom-10 right-10 text-white">
+          <button
+            onClick={() => setOpenChatBox(!openChatBox)}
+            className={`relative flex h-10 w-10 delay-200 duration-300 ${
+              !openChatBox ? "opacity-100 visible" : "opacity-0 invisible"
+            }`}
+          >
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span>
+            <span className="relative inline-flex items-center justify-center text-xl rounded-full w-10 h-10 bg-sky-500">
+              <AiOutlineMessage />
+            </span>
+          </button>
+          <div
+            className={`absolute bottom-0 right-0 transition-all duration-300 ${
+              openChatBox
+                ? "h-[400px] w-[600px] opacity-100 visible"
+                : "h-0 w-0 opacity-0 invisible overflow-hidden"
+            }`}
+          >
+            <ChatBox open={openChatBox} onClose={() => setOpenChatBox(false)} />
+          </div>
         </div>
-      </div>
-      <ToastContainer autoClose={2000} closeOnClick={true} />
+        <ToastContainer autoClose={2000} closeOnClick={true} />
+      </ConfirmDialogProvider>
     </AppContext.Provider>
   );
 }

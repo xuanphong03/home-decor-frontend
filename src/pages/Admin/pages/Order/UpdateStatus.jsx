@@ -33,10 +33,12 @@ export default function UpdateStatus({
     if (!onSubmit) return;
     await onSubmit(data);
   };
+
   useEffect(() => {
     setValue("paymentStatus", paymentStatus);
     setValue("shippingStatus", shippingStatus);
   }, [paymentStatus, shippingStatus, setValue]);
+
   return (
     <div className="p-5 bg-white w-[500px]">
       <h2 className="font-bold mb-4">Cập nhật trạng thái đơn hàng</h2>

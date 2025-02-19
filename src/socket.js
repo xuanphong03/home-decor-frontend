@@ -4,7 +4,7 @@ import { io } from "socket.io-client";
 const URL =
   process.env.NODE_ENV === "production"
     ? undefined
-    : `https://api.homedecor-nxp.site/chats`;
+    : `${import.meta.env.VITE_SERVER_SOCKET}/chats`;
 
 export const socket = io(URL, {
   auth: {

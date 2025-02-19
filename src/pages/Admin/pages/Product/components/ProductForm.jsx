@@ -399,7 +399,7 @@ export default function ProductForm({
                   className="border border-solid border-gray-200 rounded w-full px-[13px] py-[6px] outline-none"
                   {...register("productCategoryId")}
                 >
-                  {categoryList.map((cat) => (
+                  {categoryList?.map((cat) => (
                     <option key={cat.id} value={cat.id}>
                       {cat.name}
                     </option>

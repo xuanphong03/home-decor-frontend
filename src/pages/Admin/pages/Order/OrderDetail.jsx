@@ -5,10 +5,12 @@ import { useEffect, useMemo, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import UpdateStatus from "./UpdateStatus";
 import { ORDER } from "@/constants/order-status";
+import LoadingModal from "@/components/Loading/LoadingModal";
 
 export default function OrderDetail() {
   const params = useParams();
   const [alert, setAlert] = useState(null);
+  const [loading, setLoading] = useState(false);
   const [orderDetail, setOrderDetail] = useState(null);
   const [openUpdateStatusForm, setOpenUpdateStatusForm] = useState(false);
   const getOrderDetail = async () => {
@@ -31,6 +33,8 @@ export default function OrderDetail() {
 
   const handleUpdateOrderStatus = async (data) => {
     try {
+      setOpenUpdateStatusForm(false);
+      setLoading(true);
       const payload = {};
       payload.shippingStatus = data.shippingStatus;
       payload.paymentStatus = data.paymentStatus === "PAID" ? true : false;
@@ -43,10 +47,10 @@ export default function OrderDetail() {
     } catch (error) {
       setAlert({
         type: "error",
-        message: error.response.data.message,
+        message: error.response.data.message || "Đã có lỗi xảy ra",
       });
     } finally {
-      setOpenUpdateStatusForm(false);
+      setLoading(false);
     }
   };
 
@@ -57,6 +61,7 @@ export default function OrderDetail() {
 
   return (
     <>
+      {loading && <LoadingModal />}
       {openUpdateStatusForm && (
         <div className="fixed inset-0 z-50 flex items-center justify-center">
           <div className="absolute bg-black inset-0 bg-opacity-20"></div>

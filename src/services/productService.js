@@ -13,6 +13,10 @@ export const productService = {
     const url = `/products/${id}`;
     return axiosClient.patch(url, payload);
   },
+  delete(id) {
+    const url = `/products/${id}`;
+    return axiosClient.delete(url);
+  },
   create(payload) {
     const url = `/products`;
     return axiosClient.post(url, payload);

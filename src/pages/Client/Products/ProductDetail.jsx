@@ -297,7 +297,7 @@ export default function ProductDetail() {
               <div className="mb-5">
                 {productDetail?.quantity > 0 && (
                   <span className="bg-[#61c70e] text-sm px-5 py-2 rounded text-white">
-                    {productDetail.quantity}
+                    {productDetail.quantity} sản phẩm
                   </span>
                 )}
                 {productDetail?.quantity <= 0 && (

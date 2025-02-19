@@ -27,7 +27,7 @@ export default function FilterByCategory() {
             Lọc theo loại sản phẩm
           </h4>
           <ul>
-            {categoryList.map((cat) => (
+            {categoryList?.map((cat) => (
               <li key={cat.id}>
                 <Link
                   to={location.pathname + `?category=${cat.name}`}

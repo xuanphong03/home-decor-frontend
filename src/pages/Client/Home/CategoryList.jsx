@@ -86,7 +86,7 @@ export default function CategoryList() {
             {!isLoading && (
               <div className="slider-container -mx-4">
                 <Slider {...settings}>
-                  {categoryList.map((category) => (
+                  {categoryList?.map((category) => (
                     <Link to="#" key={category.id} className="px-4">
                       <div className="border border-solid border-gray-200 rounded-sm ">
                         <article className="flex flex-col items-center justify-center px-[25px] py-10">

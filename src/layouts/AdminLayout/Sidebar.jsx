@@ -139,9 +139,6 @@ export default function Sidebar() {
           <Avatar src={profile?.imageUrl} alt={profile?.name} />
           <h2 className="text-white font-medium ml-2">{profile?.name}</h2>
         </div>
-        <button className="text-center text-white px-5 py-2 w-full bg-primary hover:bg-opacity-80">
-          Đăng xuất
-        </button>
       </div>
     </div>
   );

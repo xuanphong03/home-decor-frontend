@@ -152,7 +152,7 @@ export default function CategoryList() {
                 <td className="p-4 text-left">Không có danh mục nào phù hợp</td>
               </tr>
             )}
-            {categoryList.map((category) => (
+            {categoryList?.map((category) => (
               <tr
                 key={category.id}
                 className="px-4 border-y border-solid border-gray-200"

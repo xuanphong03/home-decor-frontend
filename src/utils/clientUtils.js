@@ -24,3 +24,8 @@ export const getFirstCharacterOfName = (fullname) => {
   const lastName = nameParts[nameParts.length - 1];
   return lastName.charAt(0);
 };
+
+export const generateOrderCode = (orderNumber) => {
+  if (orderNumber > 99999) return orderNumber.toString();
+  return orderNumber.toString().padStart(10, "0");
+};
