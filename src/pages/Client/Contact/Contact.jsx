@@ -55,6 +55,7 @@ export default function Contact() {
       reset();
     }
   };
+
   return (
     <>
       {isSubmitting && <LoadingModal />}

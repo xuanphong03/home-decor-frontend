@@ -4,8 +4,12 @@ import HomeIcon from "@mui/icons-material/Home";
 import OurExpertise from "./OurExpertise";
 import TypesOfLights from "./TypesOfLights";
 import LatestPost from "./LatestPost";
+import { useEffect } from "react";
 
 export default function About() {
+  useEffect(() => {
+    document.title = "Giới thiệu - Home Decor";
+  }, []);
   return (
     <>
       <section className="py-10 lg:py-20 mt-[90px] xl:mt-0 xl:h-[450px] xl:pt-[90px] bg-no-repeat bg-cover bg-bottom bg-[url('https://ciyashop.potenzaglobalsolutions.com/decor/wp-content/uploads/sites/84/2020/08/page-header-1.jpg')]">

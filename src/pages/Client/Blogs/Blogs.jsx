@@ -75,6 +75,7 @@ export default function Blogs() {
     setBlogList(fake_data);
     setRecentBlogList(fake_data);
   }, []);
+
   return (
     <>
       <section className="py-10 lg:py-20 mt-[90px] xl:mt-0 xl:h-[450px] xl:pt-[90px] bg-no-repeat bg-cover bg-bottom bg-[url('https://ciyashop.potenzaglobalsolutions.com/decor/wp-content/uploads/sites/84/2020/08/page-header-1.jpg')]">
